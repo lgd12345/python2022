@@ -2,23 +2,29 @@ import numpy as np
 
 a = np.array([[2, 3], [5, 2]])
 print(a)
-
+# 열만 표시(가로)
 d = np.array([2, 3, 4, 5, 6])
 print(d)
 print(d.shape)
+print('++++++++++++++++++++++++++++++++++++++++++++++++++')
 
 e = np.array([[1, 2, 3, 4], [3, 4, 5, 6]])
 print(e)
+# 행 열 둘다 표시
 print(e.shape)
+# 타입
 print(e.dtype)
 print("-------------------------------------------")
+# 0으로 된 2행 10열
 print(np.zeros((2, 10)))
+# 1로 된 2행 10열
 print(np.ones((2, 10)))
-print(np.arange(2, 10))  # 2이상 10미만의 원소로 구서오딘 1차원 배열
-
+# 2이상 10미만의 원소로 구성된 1차원 배열
+print(np.arange(2, 10))
+# 1로 된 2행 3열
 a = np.ones((2, 3))
-
-# 행과 열이 바뀜
+print(a)
+# 행과 열이 바뀜 3행 2열
 b = np.transpose(a)
 print(b)
 
