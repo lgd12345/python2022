@@ -63,8 +63,9 @@ print(df2.국어)  # 비추천
 
 # 엑셀파일로 내보내기 후 주석
 # ,encoding= 'euc-kr' 한글로 변환해서 내보내기
+
 # df2.to_csv('c:/test/score.csv', header='False')
 
-# 읽을때
+# 읽을때 내보낼 때,encoding= 'euc-kr'했으면 읽을 때도, encoding= 'euc-kr'
 df3 = pd.read_csv('c:/test/score.csv', encoding='utf-8')
 print(df3)
