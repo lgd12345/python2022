@@ -2,8 +2,8 @@ import urllib.request
 import datetime
 import json
 
-cliendId = "sUxNk6q6eKtgDwsImXd6"
-clientSecret = "ttNiME9ORs"
+cliendId = ""
+clientSecret = ""
 
 # 사이트 url에 연결할 객체
 
