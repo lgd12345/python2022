@@ -30,6 +30,7 @@ print("-------------------------------------------------------")
 def getNaverSearch(node, srcText, start, display):
     base = "https://openapi.naver.com/v1/search"
     node = "/news.json"
+    # 쿼리공백이 들어가면 안댄다
     parameters = "?query=%s&start=%s&display=%s" % (
         urllib.parse.quote(srcText), start, display)
     url = base+node+parameters
@@ -55,7 +56,7 @@ def getPostDsta(post, jsonResult, cnt):
                       'org_link': org_link, 'link': link, 'pDate': pDate})
 
 
-# 여기가 메인이래요
+# 여기가 메인
 node = 'news'
 srcText = '선거'
 cnt = 0
