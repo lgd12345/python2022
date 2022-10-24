@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!-- multipart/form-data 파일 받을 때 넣어줌 -->
+<!-- 절대경로 "/insert/"-->
+<!-- 위조방지정책 {% csrf_token %}토큰값을 비교해서 정상적인 경로에서 넘어오면 넘김 views.py에 csrf_exempt임폴트해줘서 빼줘도 됨-->
+
+<body>
+    <h3>Insert</h3>
+    <form action="/insert/" method="post" enctype="multipart/form-data">
+        <!-- {% csrf_token %} -->
+        writer:<input type="text" name="writer"><br />
+        title:<input type="text" name="title"><br />
+        content:<textarea name="content" rows="5" cols="50"></textarea><br />
+        file:<input type="file" name="file"><br />
+        <input type="submit" value="글쓰기">
+    </form>
+</body>
+
+</html>
