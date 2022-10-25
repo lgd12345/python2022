@@ -26,11 +26,11 @@ driver.find_element(
 time.sleep(1)
 # 월요일
 driver.find_element(
-    By.XPATH, '//*[@id="root"]/main/div/div/div[1]/div[3]/div[2]/div[2]/ul/li[8]').click()
+    By.XPATH, '//*[@id="root"]/main/div/div/div[1]/div[3]/div[2]/div[2]/ul/li[2]').click()
 time.sleep(1)
 # 원하는 웹툰
 driver.find_element(
-    By.XPATH, '//*[@id="root"]/main/div/div[1]/div[2]/div/div[3]/div/div/div/div/div[7]/div[3]/div[2]').click()
+    By.XPATH, '//*[@id="root"]/main/div/div/div[2]/div/div[3]/div/div/div/div/div[1]/div[3]/div[20]/div/div/a/div[1]').click()
 time.sleep(1)
 
 
@@ -48,7 +48,7 @@ list = []
 # 페이지 넘기는 거... 해야하는데 모르겠다.
 
 boxItem = driver.find_elements(
-    By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div/div[1]/div/div[2]/div')
+    By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div/div[1]/div[3]/div[2]/div')
 # //*[@id = "root"]/main/div/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[4]/div[1]/div[3]/div[2]/div
