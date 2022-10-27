@@ -1,14 +1,22 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
-from myapp02.models import Board, Comment
+from myapp03.models import Board, Comment
 from django.db.models import Q
 import math
 from django.http.response import JsonResponse, HttpResponse
 import urllib.parse
 from django.core.paginator import Paginator
 
+# 같은 폴터의 forms라는 폴더에 UserForm 클래스를 쓰겠다.
+from .forms import UserForm
+# 회원가입 부분의 와 로그인
+from django.contrib.auth import authenticate, login
+# 멜론
+from myapp03 import bigdataProcess
+
+
 # 업로드될 폴더
-UPLOAD_DIR = 'C:/Python/django/upload/'
+UPLOAD_DIR = 'C:/Python/django/upload3/'
 
 # Create your views here.
 
@@ -48,7 +56,7 @@ def insert(request):
                 filename=fname,
                 filesize=fsize)
     dto.save()
-    return redirect('/')
+    return redirect('/list')
 
 # list
 
@@ -232,7 +240,7 @@ def detail_id(request):
     dto.hit_up()
     dto.save()
 
-    return render(request, 'board/detail2.html',
+    return render(request, 'board/detail.html',
                   {'dto': dto})
 
 # 레스트 방식 상세보기 (detail/<int:board_id>/)
@@ -245,7 +253,7 @@ def detail(request, board_id):
     dto.hit_up()
     dto.save()
 
-    return render(request, 'board/detail2.html', {'dto': dto})
+    return render(request, 'board/detail.html', {'dto': dto})
 
 
 # 수정하기 폼
@@ -306,3 +314,36 @@ def comment_insert(request):
                   content=request.POST['content'])
     dto.save()
     return redirect('/detail/'+id)
+
+
+# 회원가입
+# 시큐리티가 다 되 어 있는 것을 사용할 것이다.
+def signup(request):
+    if request.method == "POST":     # 회원가입 insert부분임
+        form = UserForm(request.POST)
+        if form.is_valid():          # 유효성
+            print('signup POST valid')
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+
+            login(request, user)
+            return redirect('/')
+
+        else:
+            print('signup POST un_valid')
+
+    else:                # 회원가입 폼으로 가라
+        form = UserForm()
+
+    return render(request, 'common/signup.html', {'form': form})
+
+
+#################################################
+# 멜론
+
+
+def melon(request):
+    bigdataProcess.melon_crawing()
+    return render(request, "bigdata/melon.html")

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR 추가하라는 뜻 밑에 더 추가했음 static
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -78,8 +79,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": 'djangodb2',
-        "USER": 'root',
-        'PASSWORD': '1234',
+        "USER": '????',
+        'PASSWORD': '????',
         'HOST': 'localhost',
         'PORT': '3306'
     }
@@ -114,7 +115,18 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+
 STATIC_URL = "static/"
+
+# 스테틱 인식 못하면 이런식으로 하세요
+# 기본은 이렇게 잡고
+# STATIC_URL = "/static/"
+
+# # 이걸 참조해라
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

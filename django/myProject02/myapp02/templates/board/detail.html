@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>DETAIL레스트</h2>
+    <p>id : {{dto.id}}</p>
+    <p>작성자 : {{dto.writer}}</p>
+    <p>조회수 : {{dto.hit}}</p>
+    <div class="card img-fluid" style="width:500px">
+        <img class="card-img-top" src="img_avatar1.png" alt="Card image" style="width:100%">
+        <div class="card-img-overlay">
+            <h4 class="card-title">제목 : {{dto.title}}</h4>
+            <p class="card-text">내용 : {{dto.content}}</p>
+            <p class="card-text">날짜 : {{dto.post_date}}</p>
+            <p class="card-text" colspan="3">파일 : {{dto.filename}}
+                {%if filesize > 0%} ({{filesize}}KB){% endif %}
+            </p>
+            <a href="#" class="btn btn-primary">수정하기</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

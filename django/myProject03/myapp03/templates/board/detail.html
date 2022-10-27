@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>DETAIL (레스트)</h2>
+    <div class="container">
+        <h3>조회수: {{dto.hit}} 작성자: {{dto.writer}}</h3>
+        <div class="list-group">
+            <div class="form-group">
+                <label for="title">제목:</label>
+                <a href="#" class="list-group-item list-group-item-action">{{dto.title}}</a>
+            </div>
+            <div class="form-group">
+                <label for="date">날짜:</label>
+                <a href="#" class="list-group-item list-group-item-action">{{dto.post_date}}</a>
+            </div>
+            <div class="form-group">
+                <label for="content">내용:</label>
+                <a href="#" class="list-group-item list-group-item-action">{{dto.content}}</a>
+            </div>
+            <div class="form-group">
+                <label for="file">파일:</label>
+                <a href="#" class="list-group-item list-group-item-action">{{dto.filename}}
+                    {%if filesize > 0 %} ({{filesize}}KB){% endif %}
+                </a>
+            </div>
+        </div>
+        <br />
+        <!-- 수정삭제 버튼 -->
+        <Button type="button" class="btn btn-secondary btn-sm _update"
+            data-uri="/update_form/{{dto.id}}">수정</a></Button>
+        <Button type="button" class="btn btn-danger btn-sm _delete" data-uri="/delete/{{dto.id}}">삭제</Button>
+    </div>
+    <!-- comment -->
+    <div class="mt-3">
+        <form action="/comment_insert/" method="post">
+            <input type="hidden" name="id" value="{{dto.id}}" />
+            <div class="form-group">
+                <label for="content">Comment:</label>
+                <textarea class="form-control" rows="5" id="content" placeholder="Enter content"
+                    name="content"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success btn-sm">CommentWrite</button>
+        </form>
+
+    </div>
+    <!-- comment count -->
+    <div class="mt-3">Comment({{dto.comment_set.count}})</div>
+
+    <div>
+        {% if dto.comment_set.count > 0 %}
+        <div>
+            <!-- comment list -->
+            {% for comment in dto.comment_set.all %}
+            <div class="py-2 text-muted">
+                <span>{{comment.content}}</span>
+                <span>// {{comment.writer}} // {{comment.post_date | date:'Y-m-d'}}</span>
+
+            </div>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+        <br />
+    </div>
+
+</div>
+
+{% endblock %}
+<!-- script -->
+<!-- 자바스크립트를 위에 넣었으면 실행되고 실행되어야하니깐 다큐먼트 레디를 써야함 -->
+{% block script %}
+<script>
+    $("._delete").on('click', function () {
+        alert('삭제되었습니다.')
+        location.href = $(this).data('uri')
+    })
+    $("._update").on('click', function () {
+        location.href = $(this).data('uri')
+    })
+
+</script>
+
+{% endblock %}

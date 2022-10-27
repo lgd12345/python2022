@@ -18,7 +18,7 @@ from django.urls import path
 from myapp01 import views
 
 # 서버연결해야 들어가짐 http://localhost:?/write_form
-# root list로 = path("", views.list),
+# root  list로 = path("", views.list),
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.list),

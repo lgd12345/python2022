@@ -1,4 +1,4 @@
-"""myProject02 URL Configuration
+"""myProject03 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp02 import views
+from myapp03 import views
+
+# 로그인 로그아웃과 관련된 임폴트
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -39,4 +42,16 @@ urlpatterns = [
     path("delete/<int:board_id>/", views.delete),
     # comment
     path("comment_insert/", views.comment_insert),
+    ################################################
+    # 회원가입
+    path("signup/", views.signup),
+    # 로그인
+    path("login/", auth_views.LoginView.as_view(template_name='common/login.html'), name='login'),
+    # 로그아웃
+    path("logout/", auth_views.LogoutView.as_view(), name='logout'),
+    ##############################################
+    # 멜론 노래 순위
+    path("melon/", views.melon),
+
+
 ]

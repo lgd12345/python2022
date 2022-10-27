@@ -161,6 +161,7 @@ def detail(request, board_idx):
     dto.save()
 
     # comment 댓글 list
+    # 관계성이 없다고 판단해서 이런식으로 표현했다.
     commentList = Comment.objects.filter(board_idx=id).order_by
     ('-idx')
 

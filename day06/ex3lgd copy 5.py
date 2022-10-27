@@ -30,7 +30,7 @@ driver.find_element(
 time.sleep(1)
 # 원하는 웹툰
 driver.find_element(
-    By.XPATH, '//*[@id="root"]/main/div/div/div[2]/div/div[3]/div/div/div/div/div[1]/div[3]/div[20]/div/div/a/div[1]').click()
+    By.XPATH, '//*[@id="root"]/main/div/div[1]/div[2]/div/div[3]/div/div/div/div/div[1]/div[3]/div[16]/div/div/a/div[1]').click()
 time.sleep(1)
 
 
@@ -55,14 +55,6 @@ boxItem = driver.find_elements(
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[4]/div[1]/div[3]/div[2]/div
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[7]/div[1]/div[4]/div[2]/div
-# /html/body/div[1]/div/main/div/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[4]/div[2]/div
-# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[8]/div[1]/div[3]/div[2]/div
-# /html/body/div[1]/div/main/div/div[2]/div/div[1]/div[2]/div[2]/div[1]/div[3]/div[2]/div
-# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[9]/div[1]/div[3]/div[2]/div
-# /html/body/div[1]/div/main/div/div[2]/div/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div
-# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[11]/div[1]/div[3]/div[2]/div
-# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[8]/div[1]/div[3]/div[2]/div
-# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[4]/div[2]/div/p[1]
 # //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[5]/div[1]/div[4]/div[2]/div
 
 # for i in range(1, 20):
@@ -95,40 +87,37 @@ boxItem = driver.find_elements(
 
 
 for i, item in enumerate(boxItem):
-    try:
-        try:
-            title = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[1]').text
-            writer = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[2]').text
-            view = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[2]').text
-            like = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[3]').text
-        except:
+    print(i)
 
-            title = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[4]/div[2]/div/p[1]').text
-            writer = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[4]/div[2]/div/p[2]').text
-            view = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[4]/div[2]/div/div/p[2]').text
-            like = item.find_element(
-                By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[4]/div[2]/div/div/p[3]').text
+    title = item.find_element(
+        By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[1]').text
+    writer = item.find_element(
+        By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[2]').text
+    view = item.find_element(
+        By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[2]').text
+    like = item.find_element(
+        By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[3]').text
 
-            continue
+    if i == 4:
+        title = item.find_element(
+            By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[1]').text
+        writer = item.find_element(
+            By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/p[2]').text
+        view = item.find_element(
+            By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[2]').text
+        like = item.find_element(
+            By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div['+str(i+1)+']/div[1]/div[3]/div[2]/div/div/p[3]').text
 
-        print('제목 : ', title)
-        print('작가 : ', writer)
-        print('조회수 : ', view)
-        print('좋아요 : ', like)
+    print('제목 : ', title)
+    print('작가 : ', writer)
+    print('조회수 : ', view)
+    print('좋아요 : ', like)
 
-        list.append([title, writer, view, like])
-        btnItem = driver.find_element(
-            By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[1]/div[3]/button[2]/img').click()
-        time.sleep(1)
-    except:
-        continue
+    list.append([title, writer, view, like])
+    btnItem = driver.find_element(
+        By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[1]/div[3]/button[2]/img').click()
+    time.sleep(1)
+
 
 print(list)
 
