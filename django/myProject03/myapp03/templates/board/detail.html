@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div class="container">
     <h2>DETAIL (레스트)</h2>
     <div class="container">
-        <h3>조회수: {{dto.hit}} 작성자: {{dto.writer}}</h3>
+        <h3>조회수: {{dto.hit}} 작성자: {{dto.writer}} // {{dto.writer.username}}</h3>
         <div class="list-group">
             <div class="form-group">
                 <label for="title">제목:</label>
@@ -22,15 +23,20 @@
             <div class="form-group">
                 <label for="file">파일:</label>
                 <a href="#" class="list-group-item list-group-item-action">{{dto.filename}}
-                    {%if filesize > 0 %} ({{filesize}}KB){% endif %}
+                    {% if dto.filesize > 0 %}
+                    ({{dto.filesize | intcomma}}KB) // ({{filesize_MB}})
+                    {% endif %}
                 </a>
+
             </div>
-        </div>
+        </div>25
         <br />
         <!-- 수정삭제 버튼 -->
+        {% if dto.writer.username == user.username %}
         <Button type="button" class="btn btn-secondary btn-sm _update"
             data-uri="/update_form/{{dto.id}}">수정</a></Button>
         <Button type="button" class="btn btn-danger btn-sm _delete" data-uri="/delete/{{dto.id}}">삭제</Button>
+        {% endif %}
     </div>
     <!-- comment -->
     <div class="mt-3">
@@ -46,9 +52,8 @@
 
     </div>
     <!-- comment count -->
-    <div class="mt-3">Comment({{dto.comment_set.count}})</div>
-
-    <div>
+    <div class="container">
+        <div class="mt-3">Comment({{dto.comment_set.count}})</div>
         {% if dto.comment_set.count > 0 %}
         <div>
             <!-- comment list -->
@@ -63,6 +68,7 @@
         </div>
         {% endif %}
         <br />
+
     </div>
 
 </div>

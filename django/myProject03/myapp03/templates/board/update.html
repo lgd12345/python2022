@@ -4,15 +4,13 @@
 <div class="container">
     <h2>UPDATE</h2>
     <form action="/update/" method="post" enctype="multipart/form-data">
+        <!-- 글에 대한 수정이니깐 id가 맞다 -->
         <input type="hidden" name="id" value="{{dto.id}}" />
 
         <div class="form-group">
-            <label for="id">id:</label>
-            <input type="text" class="form-control" id="writer" value="{{dto.id}}" name="id" readonly=redonly>
-        </div>
-        <div class="form-group">
             <label for="writer">writer:</label>
-            <input type="text" class="form-control" id="writer" value="{{dto.writer}}" name="writer">
+            <input type="text" class="form-control" id="writer" value="{{dto.writer.username}}" name="writer"
+                readonly=readonly>
         </div>
         <div class="form-group">
             <label for="title">title:</label>

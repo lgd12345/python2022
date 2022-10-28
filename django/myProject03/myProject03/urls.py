@@ -52,6 +52,8 @@ urlpatterns = [
     ##############################################
     # 멜론 노래 순위
     path("melon/", views.melon),
-
+    ##############################################
+    # weather
+    path("weather/", views.weather)
 
 ]

@@ -1,6 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import redirect, render
-from myapp03.models import Board, Comment
+from django.shortcuts import redirect, render, get_object_or_404
+from matplotlib.pyplot import annotate
+from sympy import im
+from myapp03.models import Board, Comment, Forecast
 from django.db.models import Q
 import math
 from django.http.response import JsonResponse, HttpResponse
@@ -13,6 +15,12 @@ from .forms import UserForm
 from django.contrib.auth import authenticate, login
 # 멜론
 from myapp03 import bigdataProcess
+# weather 디비정보 가져올때 쓰임 wf의 count 만가져오겠다. 할 때 씀
+from django.db.models.aggregates import Count
+# 판다스 임폴트
+import pandas as pd
+# 로그인된 사람만 접속
+from django.contrib.auth.decorators import login_required
 
 
 # 업로드될 폴더
@@ -26,13 +34,14 @@ UPLOAD_DIR = 'C:/Python/django/upload3/'
 def index(request):
     return render(request, "base.html")
 
-# write
+# write(로그인된 사람만 들어가게 로그인 검사)
 
 
+@login_required(login_url="/login")
 def write_form(request):
     return render(request, 'board/insert.html')
 
-# insert
+# insert (로그인ㅇㅇ)
 
 
 @csrf_exempt
@@ -50,7 +59,7 @@ def insert(request):
             fp.write(chunk)
         fp.close()
 
-    dto = Board(writer=request.POST['writer'],
+    dto = Board(writer=request.user,
                 title=request.POST['title'],
                 content=request.POST['content'],
                 filename=fname,
@@ -109,12 +118,12 @@ def list(request):
 
     # count
     if field == 'all':
-        boardCount = Board.objects.filter(Q(writer__contains=word) |
+        boardCount = Board.objects.filter(Q(writer__username__contains=word) |
                                           Q(title__contains=word) |
                                           Q(content__contains=word)).count()
     elif field == 'writer':
         boardCount = Board.objects.filter(
-            Q(writer__contains=word)).count()
+            Q(writer__username__contains=word)).count()
     elif field == 'title':
         boardCount = Board.objects.filter(
             Q(title__contains=word)).count()
@@ -143,12 +152,12 @@ def list(request):
     # Q 오알연산자
     # 검색을 하고 idx 에 대해서 내림차순으로 정렬
     if field == 'all':
-        boardList = Board.objects.filter(Q(writer__contains=word) |
+        boardList = Board.objects.filter(Q(writer__username__contains=word) |
                                          Q(title__contains=word) |
                                          Q(content__contains=word)).order_by('-id')[start:start+pageSize]
     elif field == 'writer':
         boardList = Board.objects.filter(
-            Q(writer__contains=word)).order_by('-id')[start:start+pageSize]
+            Q(writer__username__contains=word)).order_by('-id')[start:start+pageSize]
     elif field == 'title':
         boardList = Board.objects.filter(
             Q(title__contains=word)).order_by('-id')[start:start+pageSize]
@@ -205,10 +214,10 @@ def list_page(request):
     page = request.GET.get('page', '1')
     word = request.GET.get('word', '')
 
-    boardCount = Board.objects.filter(Q(writer__contains=word) |
+    boardCount = Board.objects.filter(Q(writer__username__contains=word) |
                                       Q(title__contains=word) |
                                       Q(content__contains=word)).count()
-    boardList = Board.objects.filter(Q(writer__contains=word) |
+    boardList = Board.objects.filter(Q(writer__username__contains=word) |
                                      Q(title__contains=word) |
                                      Q(content__contains=word)).order_by('-id')
 
@@ -239,9 +248,12 @@ def detail_id(request):
     dto = Board.objects.get(id=id)
     dto.hit_up()
     dto.save()
+    print("++++++++++++++++++++++++++++++++++++++", dto.filesize)
+    filesize2 = (dto.filesize / (1024.0 * 1024.0))
+    print("%.2f MB" % filesize2)
 
     return render(request, 'board/detail.html',
-                  {'dto': dto})
+                  {'dto': dto, 'filesize_MB': filesize2})
 
 # 레스트 방식 상세보기 (detail/<int:board_id>/)
 # 관계성이 comment와 있기때문에 따로 적어주지 않아도 됨
@@ -285,7 +297,7 @@ def update(request):
 # id, id=request.POST['id'], 같은말
     update_dto = Board(id,
                        #    idx=request.POST['id'],
-                       writer=request.POST['writer'],
+                       writer=request.user,
                        title=request.POST['title'],
                        content=request.POST['content'],
                        hit=fhit,
@@ -307,10 +319,13 @@ def delete(request, board_id):
 
 
 @csrf_exempt
+@login_required(login_url="/login")
 def comment_insert(request):
     id = request.POST['id']
-    dto = Comment(board_id=id,
-                  writer="aa",
+    # 없음 404 페이지 띄우겠다
+    board = get_object_or_404(Board, pk=id)
+    dto = Comment(board=board,
+                  writer=request.user,
                   content=request.POST['content'])
     dto.save()
     return redirect('/detail/'+id)
@@ -345,5 +360,36 @@ def signup(request):
 
 
 def melon(request):
-    bigdataProcess.melon_crawing()
-    return render(request, "bigdata/melon.html")
+    datas = []
+    bigdataProcess.melon_crawling(datas)
+    return render(request, "bigdata/melon.html", {'datas': datas})
+
+# 날씨
+
+
+def weather(request):
+    last_date = Forecast.objects.values('tmef').order_by('-tmef')[:1]
+    print('last_date:', len(last_date))
+    weather = {}
+    bigdataProcess.weater_crawing(last_date, weather)
+
+    print('last_date query : ', str(last_date.query))
+# db에 넣기
+    for i in weather:
+        for j in weather[i]:
+            dto = Forecast(city=i, tmef=j[0], wf=j[1], tmn=j[2], tmx=j[3])
+            dto.save()
+
+    result = Forecast.objects.filter(city='부산')
+    result1 = Forecast.objects.filter(city='부산').values(
+        'wf').annotate(dcount=Count('wf')).values("dcount", "wf")
+    print('++++++++++++++++++++++++++++++++++++++++++++++')
+    print('result1.query : ', str(result1.query))  # sql문 보여주기
+    print('++++++++++++++++++++++++++++++++++++++++++++++')
+    print('result.query : ', str(result.query))  # sql문 보여주기
+    print('++++++++++++++++++++++++++++++++++++++++++++++')
+
+    df = pd.DataFrame(result1)
+    image_dic = bigdataProcess.weater_make_chart(result, df.wf, df.dcount)
+
+    return render(request, 'bigdata/weather_chart.html', {"img_data": image_dic})

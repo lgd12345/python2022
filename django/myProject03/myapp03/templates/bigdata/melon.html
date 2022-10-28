@@ -3,7 +3,28 @@
 
 {% block content %}
 <div class="container">
-    melon
+    <br />
+    <table class="table table-hover" style="text-align: center">
+        <thead>
+            <tr>
+                <th>순위</th>
+                <th>곡명</th>
+                <th>가수</th>
+                <th>앨범</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in datas %}
+            <tr>
+                <td>{{song.rank}}</td>
+                <td>{{song.name}}</td>
+                <td>{{song.signer}}</td>
+                <td>{{song.album}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </div>
 

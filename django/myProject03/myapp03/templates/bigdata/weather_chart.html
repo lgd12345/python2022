@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="text-align: center; width: 100%;">
+    <br />
+    <!-- 그때 그때 상황에 맞게 불러오기 get_static_prefix  -->
+    <!-- {%get_static_prefix%}/경로/파일명,확장자 -->
+    <!-- <img src="{% static '/images/weather_busan.png' %}" style="width:1000px; height: 600px;"> -->
+    <img class="col-sm-3" src="{% get_static_prefix %}images/{{img_data.plot}}">
+    <img class="col-sm-3" src="{% get_static_prefix %}images/{{img_data.bar}}">
+    <img class="col-sm-3" src="{% get_static_prefix %}images/{{img_data.pie}}">
+</div>
+<div>
+    <p></p>
+</div>
+
+{% endblock %}
