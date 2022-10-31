@@ -1,7 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render, get_object_or_404
-from matplotlib.pyplot import annotate
-from sympy import im
 from myapp03.models import Board, Comment, Forecast
 from django.db.models import Q
 import math
@@ -21,7 +19,8 @@ from django.db.models.aggregates import Count
 import pandas as pd
 # 로그인된 사람만 접속
 from django.contrib.auth.decorators import login_required
-
+# json임폴트
+import json
 
 # 업로드될 폴더
 UPLOAD_DIR = 'C:/Python/django/upload3/'
@@ -393,3 +392,33 @@ def weather(request):
     image_dic = bigdataProcess.weater_make_chart(result, df.wf, df.dcount)
 
     return render(request, 'bigdata/weather_chart.html', {"img_data": image_dic})
+
+# map
+
+
+def map(request):
+    bigdataProcess.map()
+    return render(request, "bigdata/map.html")
+
+# wordcloud
+
+
+def wordcloud(request):
+    w_path = 'C:/Python/django/myProject03/data/'
+    data = json.loads(open(w_path+'4차 산업혁명.json',
+                           'r', encoding='utf-8').read())
+    # print(data)
+    bigdataProcess.make_wordCloud(data)
+    return render(request, "bigdata/wordchart.html",
+                  {"img_data": 'k_wordCloud.png'})
+
+
+def movie(request):
+    count = []
+    for i in range(0, 11):
+        count += i
+    datas = []
+    print(count)
+    bigdataProcess.movie_crawling(datas)
+    print(datas)
+    return render(request, "bigdata/movie.html", {'datas': datas})

@@ -54,6 +54,13 @@ urlpatterns = [
     path("melon/", views.melon),
     ##############################################
     # weather
-    path("weather/", views.weather)
+    path("weather/", views.weather),
+    ##############################################
+    # 지도
+    path("map/", views.map),
+    # 워드클라우드
+    path("wordcloud/", views.wordcloud),
+    # 자동차 연비
+    path("movie/", views.movie),
 
 ]

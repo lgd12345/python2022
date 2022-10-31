@@ -51,3 +51,11 @@ class Forecast(models.Model):
     wf = models.TextField(null=True)
     tmn = models.IntegerField(default=0)
     tmx = models.IntegerField(default=0)
+
+# 영화
+
+
+# class movie(models.Model):
+#     title = models.CharField(null=False, max_length=200)
+#     grade = models.DecimalField(null=True, max_digits=2, decimal_places=1)
+#     reser = models.CharField(null=True, max_length=5)

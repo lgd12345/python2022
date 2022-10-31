@@ -6,6 +6,9 @@ import time
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
+# https://tour.interpark.com/?mbn=tour&mln=tour
+
+# 가격 평점 호텔
 
 path = "C:\\chromedriver_win32\\chromedriver.exe"
 # driver = wd.Chrome(path)
@@ -33,11 +36,26 @@ driver.find_element(
 time.sleep(1)
 
 
+# pageNum = driver.find_elements(
+#     By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[1]/div[3]/button[2]/img')
+
+
 list = []
+# for i in range(1, len(pageNum)+1):
+
+# 클래스가 다름
+# grade = item.find_element(
+# By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[4]/div[2]/div/div/p[2]').text
+# print('좋아요 : ', grade)
+# 페이지 넘기는 거... 해야하는데 모르겠다.
+# test = driver.find_elements(By.CLASS_NAME, 'overflow-hidden')
+
 
 boxItem = driver.find_elements(
     By.XPATH, '//*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div/div[1]/div[3]/div[2]/div')
-
+# //*[@id = "root"]/main/div/div[2]/div/div[1]/div[2]/div[1]/div[1]/div[3]/div[2]/div
+# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[3]/div[1]/div[3]/div[2]/div
+# //*[@id="root"]/main/div/div[2]/div/div[1]/div[2]/div[4]/div[1]/div[3]/div[2]/div
 
 for i, item in enumerate(boxItem):
     try:
