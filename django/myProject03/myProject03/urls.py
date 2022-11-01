@@ -60,7 +60,7 @@ urlpatterns = [
     path("map/", views.map),
     # 워드클라우드
     path("wordcloud/", views.wordcloud),
-    # 자동차 연비
+    # 영화
     path("movie/", views.movie),
 
 ]

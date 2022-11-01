@@ -412,13 +412,11 @@ def wordcloud(request):
     return render(request, "bigdata/wordchart.html",
                   {"img_data": 'k_wordCloud.png'})
 
+# 영화
+
 
 def movie(request):
-    count = []
-    for i in range(0, 11):
-        count += i
     datas = []
-    print(count)
     bigdataProcess.movie_crawling(datas)
     print(datas)
     return render(request, "bigdata/movie.html", {'datas': datas})

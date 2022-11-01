@@ -125,15 +125,15 @@ def map():
           '구분': ['음식', '음식', '음식', '음식', '생활서비스', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '소매', '음식', '음식', '음식', '음식', '소매', '음식', '소매', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '음식', '소매', '음식', '음식', '의료', '음식', '음식', '음식', '소매', '음식', '음식', '음식', '음식', '음식', '음식', '음식']}
     # ex를 데이터 프레임 으로 만들기
     ex = DataFrame(ex)
-    ex
+
     # 지도의 중심을 지정하기 위해서 위도, 경도 평균 구하기
     lat = ex['위도'].mean()
-    lat
+
     long = ex['경도'].mean()
-    long
+
     # 지도 띄우기
     m = folium.Map([lat, long], zoom_start=9)
-    m
+
     for i in ex.index:
         sub_lat = ex.loc[i, '위도']
         sub_long = ex.loc[i, '경도']
@@ -188,40 +188,23 @@ def movie_crawling(datas):
 
     ols = soup.find('ol', class_="list_movieranking")
     rankcont = ols.find_all('div', class_='thumb_cont')
+    rank = 0
 
     for i in rankcont:
+        rank = rank + 1
         title = i.find('a', class_='link_txt').get_text()
         grade = i.find('span', class_='txt_grade').get_text()
         reser = i.find('span', class_='txt_num').get_text()
 
+        print('순위', rank)
         print('영화 제목 : ', title)
         print('평점 : ', grade)
         print('예매율 :', reser)
 
         tmp = dict()
+        tmp['rank'] = rank
         tmp['title'] = title
         tmp['grade'] = grade
         tmp['reser'] = reser
 
         datas.append(tmp)
-
-# for tr in trs[:10]:
-#         rank = tr.select_one("span.rank").get_text()
-#         name = re.sub('\n', '', tr.select_one(
-#             "div.ellipsis.rank01").get_text())
-#         signer = re.sub('\n', '', tr.select_one(
-#             "div.ellipsis.rank02 > a").get_text())
-#         album = re.sub('\n', '', tr.select_one(
-#             "div.ellipsis.rank03 > a").get_text())
-        # print(rank)
-        # print(name)
-        # print(signer)
-        # print(album)
-
-        # tmp = dict()
-        # tmp['rank'] = rank
-        # tmp['name'] = name
-        # tmp['signer'] = signer
-        # tmp['album'] = album
-
-        # datas.append(tmp)
